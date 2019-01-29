@@ -1,22 +1,28 @@
+const pokeking = document.getElementById('pokeking');
+const pokeking_div = document.getElementById('pokeking-div');
+const pokeking_link = '/pokeking';
 
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
-require('./bootstrap');
-
-window.Vue = require('vue');
-
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
-
-const app = new Vue({
-    el: '#app'
-});
+pokeking.addEventListener('click', ()=>{
+    fetch(pokeking_link, { headers: { "Content-Type": "application/json; charset=utf-8" }})
+    .then(pokeking.innerHTML = 'Loading...')
+    .then(res => res.json())
+    .then(response => {
+        pokeking.remove();
+        const output = `
+            <div class="nes-container with-title is-centered">
+                <p class="title"><i class="nes-icon trophy is-small"></i>${response.name}<i class="nes-icon trophy is-small"></i></p>
+                <p>
+                    <img src="${response.image}"><br>
+                    Sum of Base Stats: ${response.sum_of_stats}<br>
+                    Height: ${response.height}<br>
+                    Weight: ${response.weight}<br>
+                </p>
+            </div>
+        `;
+        pokeking_div.innerHTML = output;
+    })
+    .catch(err => {
+        console.log(err);
+        alert("sorry, something went wrong");
+    });
+})

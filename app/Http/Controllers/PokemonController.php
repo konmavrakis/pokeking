@@ -10,6 +10,6 @@ class PokemonController extends Controller
     {
         $pokemon = PokemonProfile::orderBy('data->weight', 'desc')->paginate(5);
 
-        return view('welcome', ['pokemon' => $pokemon]);
+        return view('pokemon.index', ['pokemon' => $pokemon]);
     }
 }
